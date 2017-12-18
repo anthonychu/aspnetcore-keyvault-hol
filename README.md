@@ -117,9 +117,7 @@ Select **Secrets** and add a new **Manual** secret named `ConnectionStrings--Def
 
 ![Create secret](media/create-secret.png)
 
-Create the secret.
-
-Copy the Key Vault's DNS name from its overview page.
+Now that the secret has been created, copy the Key Vault's DNS name from its overview page.
 
 Open the Web App's application settings again in the Azure portal:
 
