@@ -3,6 +3,7 @@
 ## Introduction
 
 
+
 ## Create an ASP.NET Core 2.0 application with SQL Server LocalDB
 
 ### 1. Create ASP.NET Core project
@@ -17,7 +18,7 @@ Change authentication to **Individual User Accounts**. Then select **Store user 
 
 ![Change Authentication Dialog](media/change-authentication-dialog-marked-up.png)
 
-A project with individual authentication will be created. Open **appsettings.json** and see that the `DefaultConnection` connection string is set to a SQL Server LocalDB instance. Because the LocalDB connection string is not considered a secret, it is acceptable to store it in appsettings.json and commit it to source control.
+A project with individual authentication is created. Open **appsettings.json** and see that the `DefaultConnection` connection string is set to a SQL Server LocalDB instance. Because the LocalDB connection string is not considered a secret, it is acceptable to store it in appsettings.json and commit it to source control.
 
 ### 2. Enable automatic database migrations
 
@@ -32,7 +33,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, Applicat
 }
 ```
 
->  Note that in a real-world application, you may want to apply migrations manually.
+>  In a real-world application, you may want to apply migrations manually.
 
 ### 3. Test the application
 
@@ -76,7 +77,7 @@ Create the three resources: App Service Plan, SQL Server, and SQL Database.
 
 ### 2. Test the application
 
-When the resources are provisioned in Azure and the application is published, the published application will open in a browser window.
+When the resources are provisioned in Azure and the application is published, the application opens in a browser window.
 
 Register a new user. A new user is created in the Azure SQL Database.
 
@@ -140,7 +141,7 @@ public static IWebHost BuildWebHost(string[] args) =>
     WebHost.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((ctx, builder) =>
         {
-            var keyVaultEndpoint = Environment.GetEnvironmentVariable("KEYVAULT_ENDPOINT");
+            var keyVaultEndpoint = builder.Build()["KEYVAULT_ENDPOINT"];
             if (!string.IsNullOrEmpty(keyVaultEndpoint))
             {
                 var azureServiceTokenProvider = new AzureServiceTokenProvider();
@@ -158,3 +159,40 @@ public static IWebHost BuildWebHost(string[] args) =>
 Publish the application to Azure. The application should still be functional.
 
 ## Develop locally using Key Vault
+
+### 1. Install and configure Azure Services Authentication Visual Studio extension
+
+Install the [Azure Service Authentication extension](https://marketplace.visualstudio.com/items?itemName=chrismann.MicrosoftVisualStudioAsalExtension) in Visual Studio. It allows projects that use the Microsoft.Azure.Services.AppAuthentication library to access Azure resources such as Key Vault using your Visual Studio account.
+
+Configure the extension by selecting your account in the Azure Service Authentication options.
+
+![Configure Azure Service Authentication](media/configure-azure-service-auth.png)
+
+### 2. Configure local application to use Key Vault
+
+To enable Key Vault integration, the application checks for the presence of a `KEYVAULT_ENDPOINT` configuration value. Add this value to the application's configuration to enable Key Vault.
+
+Because the Key Vault DNS name is potentially sensitive information, it should not be added to appsettings.json and committed to source control.
+
+.NET Core can store user secrets in the local system without adding them to the project. To modify local user secrets, right-click the project in Visual Studio and select **Manage User Secrets** to open a secrets.json file.
+
+Add an entry for the `KEYVAULT_ENDPOINT` setting.
+
+```json
+{
+  "KEYVAULT_ENDPOINT": "https://<keyvault-name>.vault.azure.net/"
+}
+```
+
+### 3. Configure SQL Database for remote access
+
+Azure SQL Database block all incoming connections except for IP addresses in a whitelist. To allow the application to access the database in Azure, add a firewall rule to the SQL Database Server using the Azure portal.
+
+![Add SQL Database Firewall Rule](media/sqldb-add-client-ip.png)
+
+### 4. Test the application
+
+In Visual Studio, set a breakpoint in `ConfigureServices()` in **Startup.cs** to inspect the value of `Configuration.GetConnectionString("DefaultConnection")`. Run the application to see it is now using the connection string from Key Vault.
+
+![Inspect configuration value](media/inspect-value.png)
+
