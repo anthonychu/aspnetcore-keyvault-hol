@@ -2,9 +2,22 @@
 
 ## Introduction
 
+Key Vault is the recommended service for securely storing application secrets in Azure. ASP.NET Core allows application configuration values to seamlessly integrate with Key Vault.
 
+In this lab, you will create an ASP.NET Core 2.0 application that securely accesses a SQL Database connection string from Key Vault. You will deploy the application to Azure App Service. You will also learn how to run the application locally with Key Vault integration.
 
+## Exercises
+This workshop consists of the following exercises:
+
+1. [Create an ASP.NET Core 2.0 application with SQL Server LocalDB](#Exercise1)
+2. [Publish the application to Azure](#Exercise2)
+3. [Store the Azure SQL Database connection string in Key Vault](#Exercise3)
+4. [Develop locally using Key Vault](#Exercise4)
+
+<a name="Exercise1"></a>
 ## Create an ASP.NET Core 2.0 application with SQL Server LocalDB
+
+In this exercise, you will create an ASP.NET Core web application that interacts with SQL Server LocalDB to manage user accounts. This application is used in the remainder of the lab to demonstrate how to integrate with Azure Key Vault.
 
 ### 1. Create ASP.NET Core project
 
@@ -43,7 +56,7 @@ Run the application and register a new user.
 
 The user is created in the SQL Server LocalDB instance.
 
-
+<a name="Exercise2"></a>
 ## Publish the application to Azure
 
 ### 1. Publish the application from Visual Studio
@@ -81,7 +94,7 @@ When the resources are provisioned in Azure and the application is published, th
 
 Register a new user. A new user is created in the Azure SQL Database.
 
-
+<a name="Exercise3"></a>
 ## Store the Azure SQL Database connection string in Key Vault
 
 ### 1. Enable Managed Service Identity
@@ -158,6 +171,7 @@ public static IWebHost BuildWebHost(string[] args) =>
 
 Publish the application to Azure. The application should still be functional.
 
+<a name="Exercise4"></a>
 ## Develop locally using Key Vault
 
 ### 1. Install and configure Azure Services Authentication Visual Studio extension
