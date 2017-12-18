@@ -9,10 +9,10 @@ In this lab, you will create an ASP.NET Core 2.0 application that securely acces
 ## Exercises
 This workshop consists of the following exercises:
 
-1. [Create an ASP.NET Core 2.0 application with SQL Server LocalDB](#Exercise1)
-2. [Publish the application to Azure](#Exercise2)
-3. [Store the Azure SQL Database connection string in Key Vault](#Exercise3)
-4. [Develop locally using Key Vault](#Exercise4)
+* [Create an ASP.NET Core 2.0 application with SQL Server LocalDB](#Exercise1)
+* [Publish the application to Azure](#Exercise2)
+* [Store the Azure SQL Database connection string in Key Vault](#Exercise3)
+* [Develop locally using Key Vault](#Exercise4)
 
 <a name="Exercise1"></a>
 ## Create an ASP.NET Core 2.0 application with SQL Server LocalDB
