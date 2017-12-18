@@ -121,7 +121,7 @@ Now that the secret has been created, copy the Key Vault's DNS name from its ove
 
 Open the Web App's application settings again in the Azure portal:
 
-* Add an application setting named `KEYVAULT_ENDPOINT` and paste in the Key Vault's DNS name.
+* Add an application setting named `KEYVAULT_ENDPOINT` and paste in the Key Vault's DNS name as the value.
 * Delete the `DefaultConnection` connection string.
 
 In Visual Studio, right-click on the project and select **Manage NuGet Packages**. Search for the `Microsoft.Azure.Services.AppAuthentication` package (include prerelease) and install it. 
