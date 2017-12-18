@@ -3,11 +3,9 @@
 ## Introduction
 
 
-## Exercises
+## Create an ASP.NET Core 2.0 application with SQL Server LocalDB
 
-### Create an ASP.NET Core 2.0 application with SQL Server LocalDB
-
-#### 1. Create ASP.NET Core project
+### 1. Create ASP.NET Core project
 
 In Visual Studio 2017, create a new **ASP.NET Core Web Application** project.
 
@@ -21,7 +19,7 @@ Change authentication to **Individual User Accounts**. Then select **Store user 
 
 A project with individual authentication will be created. Open **appsettings.json** and see that the `DefaultConnection` connection string is set to a SQL Server LocalDB instance. Because the LocalDB connection string is not considered a secret, it is acceptable to store it in appsettings.json and commit it to source control.
 
-#### 2. Enable automatic database migrations
+### 2. Enable automatic database migrations
 
 In **Startup.cs**, add an `ApplicationDbContext` parameter to the `Configure()` method. Then add a line to automatically apply database migrations on application startup.
 
@@ -36,7 +34,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env, Applicat
 
 >  Note that in a real-world application, you may want to apply migrations manually.
 
-#### 3. Test the application
+### 3. Test the application
 
 Run the application and register a new user.
 
@@ -45,9 +43,9 @@ Run the application and register a new user.
 The user is created in the SQL Server LocalDB instance.
 
 
-### Publish the application to Azure
+## Publish the application to Azure
 
-#### 1. Publish the application from Visual Studio
+### 1. Publish the application from Visual Studio
 
 In **Solution Explorer**, right-click on the project and select **Publish** to open the publish dialog.
 
@@ -76,22 +74,22 @@ Create the three resources: App Service Plan, SQL Server, and SQL Database.
 
 ![Create App Service](media/create-app-service-services-completed-marked-up.png)
 
-#### 2. Test the application
+### 2. Test the application
 
 When the resources are provisioned in Azure and the application is published, the published application will open in a browser window.
 
 Register a new user. A new user is created in the Azure SQL Database.
 
 
-### Store the Azure SQL Database connection string in Key Vault
+## Store the Azure SQL Database connection string in Key Vault
 
-#### 1. Enable Managed Service Identity
+### 1. Enable Managed Service Identity
 
 In the Azure portal, open the Web App that you created. Select **Managed service identity** and enable it.
 
 ![Enable Managed Service Identity](media/managed-service-identity-marked-up.png)
 
-#### 2. Create a Key Vault
+### 2. Create a Key Vault
 
 In the Azure portal, create a new Key Vault in the same location and resource group as the Web App and SQL Database.
 
@@ -107,7 +105,7 @@ Add a new access policy to give the Web App **Get** and **List** secrets permiss
 
 Create the Key Vault.
 
-#### 3. Use Key Vault to store connection string secret
+### 3. Use Key Vault to store connection string secret
 
 Open the Web App in the Azure portal and select **Application settings**. Copy the value of the connection string named `DefaultConnection`.
 
@@ -161,4 +159,4 @@ public static IWebHost BuildWebHost(string[] args) =>
 
 Publish the application to Azure. The application should still be functional.
 
-#### 4. Develop locally using Key Vault
+## Develop locally using Key Vault
