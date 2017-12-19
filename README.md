@@ -142,7 +142,7 @@ Add a new access policy to give the Web App **Get** and **List** secrets permiss
 
 Create the Key Vault.
 
-### 3. Use Key Vault to store connection string secret
+### 3. Use Key Vault to store the connection string secret
 
 Open the Web App in the Azure portal and select **Application settings**. Copy the value of the connection string named `DefaultConnection`.
 
@@ -154,7 +154,7 @@ Open the Key Vault in the Azure portal.
 
 Select **Secrets** and add a new **Manual** secret named `ConnectionStrings--DefaultConnection`. Use the value copied from the application settings.
 
-> The `--` notation specifies nested configuration values. `DefaultConnection` is a nested property of `ConnectionStrings`.
+> The `--` notation specifies nested configuration values. `DefaultConnection` is a nested property of `ConnectionStrings`. (See **appsettings.json**)
 
 ![Create secret](media/create-secret.png)
 
